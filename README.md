@@ -14,7 +14,7 @@ This is a simple web-based tool built with **Streamlit** that allows users to:
 ### 1. Clone the Repository
 
 ```bash
-git clone <https://github.com/npadilla88/kmeans_app.git>
+git clone https://github.com/npadilla88/kmeans_app.git
 cd segmentation
 ```
 
