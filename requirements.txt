@@ -1,0 +1,7 @@
+python=3.9
+streamlit
+scikit-learn
+matplotlib
+pandas
+seaborn
+numpy
