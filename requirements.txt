@@ -1,7 +1,7 @@
 python=3.9
 streamlit
+numpy
 scikit-learn
-matplotlib
 pandas
 seaborn
-numpy
+matplotlib
