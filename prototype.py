@@ -15,7 +15,7 @@ plt.style.use('dark_background')
 
 # Streamlit UI
 st.set_page_config(page_title="K-Means Segmentation Web App", layout="wide")
-st.image("lbs_logo.jpg", width=50)
+st.image("./img/lbs_logo.jpg", width=50)
 st.title("LBS K-Means Segmentation Web App")
 
 # Navigation
