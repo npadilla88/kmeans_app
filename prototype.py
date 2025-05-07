@@ -19,7 +19,7 @@ st.title("LBS K-Means Segmentation Web App")
 
 # Navigation
 st.sidebar.title("Navigation")
-sections = ["Instructions", "Raw Data", "Elbow Plot & Explained Variance", "Cluster Descriptions", "Cluster Assignments"]
+sections = ["Instructions", "Data Exploration", "Elbow Plot & Explained Variance", "Segment Descriptions", "Segment Assignments"]
 selection = st.sidebar.radio("Go to", sections)
 
 # File upload
@@ -28,21 +28,21 @@ uploaded_file = st.file_uploader("Upload a CSV file with ID column and numerical
 # Display instructions
 if selection == "Instructions":
     st.markdown("""
-    Welcome to the London Business School KMeans Segmentation Web App tool for the Marketing Strategy course!
+    ### Welcome to the London Business School KMeans Segmentation Web App tool for the Marketing Strategy course!
 
     This web application is designed to assist you in performing KMeans clustering on your dataset. 
 
     Provided with a CSV file, the app will help you:
                 
     - Summarise the data,
-    - Determine the optimal number of clusters using the Elbow method,
-    - Provide detailed descriptions of each cluster given the number of clusters you decide.
+    - Determine the optimal number of segments using the Elbow method,
+    - Provide detailed descriptions of each cluster given the number of segments you decide.
 
     ### Instructions
                 
     1. **Upload your CSV file**: The first column should contain unique IDs, and the remaining columns should contain numerical variables.
     2. **Select the analysis**: Use the sidebar to navigate through different sections of the app.
-    3. **View results**: The app will display the raw data, Elbow plot, explained variance, cluster descriptions, and cluster assignments.
+    3. **View results**: The app will display summary statistics, the explained variance for different number of segments, cluster descriptions, and cluster assignments.
                 
     ### Important Notes
     - Ensure that the first column of your CSV file contains unique IDs.
@@ -63,7 +63,8 @@ if uploaded_file:
         df_numeric = df[numeric_cols]
         
         # Display raw data
-        if selection == "Raw Data":
+        if selection == "Data Exploration":
+            st.write("## Data Exploration")
             st.write("### Raw Data Preview")
             st.dataframe(df)
             st.write("### Summary statistics")
@@ -72,7 +73,7 @@ if uploaded_file:
             summary_stats['std'] = summary_stats['std'].map(lambda x: f"{x:.2f}")
             st.dataframe(summary_stats)
         
-        # Run K-Means for k = 2 to 8 clusters
+        # Run K-Means for k = 2 to 8 segments
         k_values = list(range(2, 9))
         inertia_values = []
         explained_variance = []
@@ -97,15 +98,15 @@ if uploaded_file:
             explained_variance.append(1 - (best_inertia / total_variance))
             
             # Store cluster assignments
-            cluster_assignments[f'Cluster_k{k}'] = best_kmeans.labels_ + 1 # Start indexes by one
+            cluster_assignments[f'Segment_k{k}'] = best_kmeans.labels_ + 1 # Start indexes by one
             
-            # Compute cluster descriptions
+            # Compute Segment descriptions
             cluster_sizes = pd.Series(best_kmeans.labels_).value_counts(normalize=True)
             cluster_means = df_numeric.groupby(best_kmeans.labels_).mean().round(2)
             cluster_description = cluster_means.copy()
-            cluster_description.insert(0, "Cluster Size", cluster_sizes)
+            cluster_description.insert(0, "Segment Size", cluster_sizes)
             cluster_description.index = cluster_description.index + 1  # Start indexes by one
-            cluster_description.index.name = "Cluster"
+            cluster_description.index.name = "Segment"
             cluster_description.reset_index(inplace=True)
             cluster_description.iloc[:, 1:] = cluster_description.iloc[:, 1:].applymap(lambda x: f"{x:.2f}")
             cluster_descriptions[k] = cluster_description
@@ -125,7 +126,7 @@ if uploaded_file:
                 linewidth=2,
                 markersize=6
             )            
-            ax.set_xlabel("Number of Clusters (k)")
+            ax.set_xlabel("Number of Segments (k)")
             ax.set_ylabel("Explained Variance (%)")
             ax.set_title("Elbow Method for Optimal k")
             # Display plot and table
@@ -136,14 +137,14 @@ if uploaded_file:
             col2.write("### Explained Variance Table")
             col2.dataframe(variance_df)
         
-        # Display Cluster Descriptions
-        if selection == "Cluster Descriptions":
-            st.write("### Cluster Description Table")
+        # Display Segment Descriptions
+        if selection == "Segment Descriptions":
+            st.write("### Segment Description Table")
             for k, desc_df in cluster_descriptions.items():
-                st.write(f"#### Cluster Description for k = {k}")
+                st.write(f"#### Segment Description for k = {k}")
                 st.dataframe(desc_df)
         
-        # Display Cluster Assignments
-        if selection == "Cluster Assignments":
-            st.write("### Cluster Assignments")
+        # Display Segment Assignments
+        if selection == "Segment Assignments":
+            st.write("### Segment Assignments")
             st.dataframe(cluster_assignments)
