@@ -9,6 +9,10 @@ from io import StringIO
 # Set random seed for reproducibility
 RANDOM_SEED = 42
 
+# Set a dark background style
+plt.style.use('dark_background')
+
+
 # Streamlit UI
 st.set_page_config(page_title="K-Means Clustering Web App", layout="wide")
 st.title("K-Means Clustering Web App")
@@ -57,7 +61,7 @@ if uploaded_file:
             best_inertia = float('inf')
             
             # Run multiple initializations and choose the best one
-            for _ in range(20):  # Running KMeans 10 times
+            for _ in range(10):  # Running KMeans 10 times
                 kmeans = KMeans(n_clusters=k, n_init=10, random_state=RANDOM_SEED)
                 kmeans.fit(df_numeric)
                 
@@ -85,8 +89,17 @@ if uploaded_file:
         # Elbow Plot
         if selection == "Elbow Plot & Explained Variance":
             explained_variance_percentage = [var * 100 for var in explained_variance]
-            fig, ax = plt.subplots()
-            ax.plot(k_values, explained_variance_percentage, marker='o', linestyle='--')
+            fig, ax = plt.subplots(figsize=(8, 5), facecolor='#001E62')
+            ax.plot(
+                k_values,
+                explained_variance_percentage,
+                marker='o',
+                linestyle='--',
+                # color='#EBE8E5',        # light primary color for contrast
+                color='#FFFFFF',        # light primary color for contrast
+                linewidth=2,
+                markersize=6
+            )            
             ax.set_xlabel("Number of Clusters (k)")
             ax.set_ylabel("Explained Variance (%)")
             ax.set_title("Elbow Method for Optimal k")
