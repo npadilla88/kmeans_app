@@ -89,7 +89,8 @@ if uploaded_file:
         # Elbow Plot
         if selection == "Elbow Plot & Explained Variance":
             explained_variance_percentage = [var * 100 for var in explained_variance]
-            fig, ax = plt.subplots(figsize=(8, 5), facecolor='#C8102E')
+            fig, ax = plt.subplots(figsize=(8, 5), facecolor='#001E62')
+            ax.set_facecolor('#C8102E')
             ax.plot(
                 k_values,
                 explained_variance_percentage,
