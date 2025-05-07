@@ -14,37 +14,41 @@ plt.style.use('dark_background')
 
 
 # Streamlit UI
-st.set_page_config(page_title="K-Means Clustering Web App", layout="wide")
-st.title("K-Means Clustering Web App")
-st.markdown("""
-## Welcome to the KMeans Clustering Web App Tool for the Marketing Strategy course!
-
-This web application is designed to assist you in performing KMeans clustering on your dataset. Provided with a CSV file, the app will guide you through the process of dimensionality reduction and clustering analysis.
-The app will help you summarise the data, determine the optimal number of clusters using the Elbow method, and provide detailed descriptions of each cluster given the number of clusters you decide.
-
-### Instructions
-            
-1. **Upload your CSV file**: The first column should contain unique IDs, and the remaining columns should contain numerical variables.
-2. **Select the analysis**: Use the sidebar to navigate through different sections of the app.
-3. **View results**: The app will display the raw data, Elbow plot, explained variance, cluster descriptions, and cluster assignments.
-            
-### Important Notes
-- Ensure that the first column of your CSV file contains unique IDs.
-- The remaining columns should contain numerical variables suitable for clustering. Those values should belong to comparable scales.         
-            
-
-Start by uploading a CSV file containing numeric data.
-""")
-
-st.write("Upload a CSV file with ID column and numerical variables.")
+st.set_page_config(page_title="K-Means Segmentation Web App", layout="wide")
+st.title("LBS K-Means Segmentation Web App")
 
 # Navigation
 st.sidebar.title("Navigation")
-sections = ["Raw Data", "Elbow Plot & Explained Variance", "Cluster Descriptions", "Cluster Assignments"]
+sections = ["Instructions", "Raw Data", "Elbow Plot & Explained Variance", "Cluster Descriptions", "Cluster Assignments"]
 selection = st.sidebar.radio("Go to", sections)
 
 # File upload
-uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
+uploaded_file = st.file_uploader("Upload a CSV file with ID column and numerical variables", type=["csv"])
+
+# Display instructions
+if selection == "Instructions":
+    st.markdown("""
+    Welcome to the London Business School KMeans Segmentation Web App tool for the Marketing Strategy course!
+
+    This web application is designed to assist you in performing KMeans clustering on your dataset. 
+
+    Provided with a CSV file, the app will help you:
+                
+    - Summarise the data,
+    - Determine the optimal number of clusters using the Elbow method,
+    - Provide detailed descriptions of each cluster given the number of clusters you decide.
+
+    ### Instructions
+                
+    1. **Upload your CSV file**: The first column should contain unique IDs, and the remaining columns should contain numerical variables.
+    2. **Select the analysis**: Use the sidebar to navigate through different sections of the app.
+    3. **View results**: The app will display the raw data, Elbow plot, explained variance, cluster descriptions, and cluster assignments.
+                
+    ### Important Notes
+    - Ensure that the first column of your CSV file contains unique IDs.
+    - The remaining columns should contain numerical variables suitable for clustering. Those values should belong to comparable scales.         
+                
+    """)
 
 if uploaded_file:
     # Read the CSV file
