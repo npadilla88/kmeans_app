@@ -11,7 +11,17 @@ RANDOM_SEED = 42
 
 # Set a dark background style
 plt.style.use('dark_background')
-
+st.markdown(
+    """
+    <style>
+    thead tr th {
+        background-color: rgba(200, 16, 46, 1) !important;  /* Full opacity */
+        color: white !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # Streamlit UI
 st.set_page_config(page_title="K-Means Segmentation Web App", layout="wide")
