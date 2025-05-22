@@ -163,8 +163,8 @@ if uploaded_file:
                 axis_y = 3
                 x_col, y_col = df_seg.columns[axis_x], df_seg.columns[axis_y]  # Assuming cols: Segment, Size, X, Y, ...
                 # Original data for defining the plot limits
-                x_min, x_max = df[x_col].min(), df[x_col].max()
-                y_min, y_max = df[y_col].min(), df[y_col].max()
+                # x_min, x_max = df[x_col].min(), df[x_col].max()
+                # y_min, y_max = df[y_col].min(), df[y_col].max()
                 # Plotting
                 fig, ax = plt.subplots(figsize=(8, 8), facecolor='#001E62')
                 # ax.set_facecolor('#C8102E')
@@ -183,8 +183,8 @@ if uploaded_file:
                 ax.set_xlabel(x_col)
                 ax.set_ylabel(y_col)
                 ax.set_title(f"Segment Description for k = {selected_k}")
-                ax.set_xlim(x_min, x_max)
-                ax.set_ylim(y_min, y_max)
+                # ax.set_xlim(x_min, x_max)
+                # ax.set_ylim(y_min, y_max)
                 ax.grid(True, linestyle='--', alpha=0.5)
                 st.pyplot(fig)
             else:
