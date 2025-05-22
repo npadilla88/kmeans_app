@@ -168,9 +168,9 @@ if uploaded_file:
                 # ax.set_facecolor('#C8102E')
                 # Plot each segment as a bubble
                 ax.scatter(
-                    df_seg[2],
-                    df_seg[3],
-                    s=df_seg["Segment Size"] * 1000,  # Scale bubble size
+                    df_seg[x_col],
+                    df_seg[y_col],
+                    s=df_seg["Segment Size"].astype(float) * 1000,  # Scale bubble size
                     alpha=0.6,
                     c='#C8102E',
                     edgecolors='white'
