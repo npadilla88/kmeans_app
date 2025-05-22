@@ -164,10 +164,10 @@ if uploaded_file:
                 # Get list of numeric columns to choose from (excluding 'Segment' and 'Segment Size')
                 available_columns = df_seg.columns.drop(["Segment", "Segment Size"], errors='ignore').tolist()
                 # Let user select X and Y axes
-                default_x = 2 if len(available_columns) > 1 else 0
-                default_y = 3 if len(available_columns) > 2 else default_x
-                x_col = st.selectbox("Select X-axis variable", available_columns, index=2)
-                y_col = st.selectbox("Select Y-axis variable", available_columns, index=3 if len(available_columns) > 1 else 0)
+                default_x = 0 if len(available_columns) > 0 else 0
+                default_y = 1 if len(available_columns) > 1 else default_x
+                x_col = st.selectbox("Select X-axis variable", available_columns, index=default_x)
+                y_col = st.selectbox("Select Y-axis variable", available_columns, index=default_y)
                 # Original data for defining the plot limits
                 # Plotting
                 x_min, x_max = df[x_col].min() - 0.5, df[x_col].max() + 0.5
