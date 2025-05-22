@@ -151,11 +151,11 @@ if uploaded_file:
         
         # Display Segment Descriptions
         if selection == "Segment Descriptions":
-            st.write("### Segment Description Table")
+            st.write("### Segments Description Table")
             k_options = list(k_values)
             selected_k = st.selectbox("Select the number of segments (k)", k_options)
             if selected_k in cluster_descriptions:
-                st.write(f"#### Segment Description for k = {selected_k}")
+                st.write(f"#### Segments Description for k = {selected_k}")
                 st.dataframe(cluster_descriptions[selected_k])
                 # Extract the selected segment table
                 df_seg = cluster_descriptions[selected_k]
@@ -172,10 +172,10 @@ if uploaded_file:
                 # Plotting
                 x_min, x_max = df[x_col].min() - 0.5, df[x_col].max() + 0.5
                 y_min, y_max = df[y_col].min() - 0.5, df[y_col].max() + 0.5
-                fig, ax = plt.subplots(figsize=(5, 5), facecolor='#001E62')
+                fig, ax = plt.subplots(figsize=(8, 8), facecolor='#001E62')
                 ax.set_facecolor('#001E62')
                 # Plot each segment as a bubble
-                sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 10000
+                sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 5000
                 ax.scatter(
                     df_seg[x_col],
                     df_seg[y_col],
