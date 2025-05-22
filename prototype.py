@@ -166,10 +166,12 @@ if uploaded_file:
                 x_col, y_col = df_seg.columns[axis_x], df_seg.columns[axis_y]  # Assuming cols: Segment, Size, X, Y, ...
                 # Original data for defining the plot limits
                 # Plotting
+                x_min, x_max = df[x_col].min() - 0.5, df[x_col].max() + 0.5
+                y_min, y_max = df[y_col].min() - 0.5, df[y_col].max() + 0.5
                 fig, ax = plt.subplots(figsize=(8, 8), facecolor='#001E62')
-                # ax.set_facecolor('#C8102E')
+                ax.set_facecolor('#001E62')
                 # Plot each segment as a bubble
-                sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 1000
+                sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 3000
                 ax.scatter(
                     df_seg[x_col],
                     df_seg[y_col],
@@ -183,6 +185,8 @@ if uploaded_file:
                     ax.text(row[x_col], row[y_col], str(int(row["Segment"])), fontsize=10, ha='center', va='center', color='white')
                 ax.set_xlabel(x_col)
                 ax.set_ylabel(y_col)
+                ax.set_xlim(x_min, x_max)
+                ax.set_ylim(y_min, y_max)
                 ax.set_title(f"Segment Description for k = {selected_k}")
                 ax.grid(True, linestyle='--', alpha=0.5)
                 st.pyplot(fig)
