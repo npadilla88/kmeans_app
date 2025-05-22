@@ -172,7 +172,7 @@ if uploaded_file:
                 # Plotting
                 x_min, x_max = df[x_col].min() - 0.5, df[x_col].max() + 0.5
                 y_min, y_max = df[y_col].min() - 0.5, df[y_col].max() + 0.5
-                fig, ax = plt.subplots(figsize=(8, 8), facecolor='#001E62')
+                fig, ax = plt.subplots(figsize=(5, 5), facecolor='#001E62')
                 ax.set_facecolor('#001E62')
                 # Plot each segment as a bubble
                 sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 10000
