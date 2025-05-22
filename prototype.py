@@ -175,7 +175,7 @@ if uploaded_file:
                 fig, ax = plt.subplots(figsize=(8, 8), facecolor='#001E62')
                 ax.set_facecolor('#001E62')
                 # Plot each segment as a bubble
-                sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 3000
+                sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 10000
                 ax.scatter(
                     df_seg[x_col],
                     df_seg[y_col],
