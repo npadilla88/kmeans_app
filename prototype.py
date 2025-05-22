@@ -141,9 +141,16 @@ if uploaded_file:
         # Display Segment Descriptions
         if selection == "Segment Descriptions":
             st.write("### Segment Description Table")
-            for k, desc_df in cluster_descriptions.items():
-                st.write(f"#### Segment Description for k = {k}")
-                st.dataframe(desc_df)
+            k_options = list(cluster_descriptions.keys())
+            selected_k = st.selectbox("Select the number of segments (k)", k_options)
+            if selected_k in cluster_descriptions:
+                st.write(f"#### Segment Description for k = {selected_k}")
+                st.dataframe(cluster_descriptions[selected_k])
+            else:
+                st.error("Invalid selection. Please select a valid number of segments.")
+            # for k, desc_df in cluster_descriptions.items():
+            #     st.write(f"#### Segment Description for k = {k}")
+            #     st.dataframe(desc_df)
         
         # Display Segment Assignments
         if selection == "Segment Assignments":
