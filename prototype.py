@@ -161,9 +161,13 @@ if uploaded_file:
                 df_seg = cluster_descriptions[selected_k]
                 # Transform all columns to numeric
                 df_seg.iloc[:, 1:] = df_seg.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
-                axis_x = 2
-                axis_y = 3
-                x_col, y_col = df_seg.columns[axis_x], df_seg.columns[axis_y]  # Assuming cols: Segment, Size, X, Y, ...
+                # Get list of numeric columns to choose from (excluding 'Segment' and 'Segment Size')
+                available_columns = df_seg.columns.drop(["Segment", "Segment Size"], errors='ignore').tolist()
+                # Let user select X and Y axes
+                default_x = 2 if len(available_columns) > 1 else 0
+                default_y = 3 if len(available_columns) > 2 else default_x
+                x_col = st.selectbox("Select X-axis variable", available_columns, index=2)
+                y_col = st.selectbox("Select Y-axis variable", available_columns, index=3 if len(available_columns) > 1 else 0)
                 # Original data for defining the plot limits
                 # Plotting
                 x_min, x_max = df[x_col].min() - 0.5, df[x_col].max() + 0.5
