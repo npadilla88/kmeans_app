@@ -11,6 +11,9 @@ RANDOM_SEED = 42
 
 # Set a dark background style
 plt.style.use('dark_background')
+
+# Streamlit UI
+st.set_page_config(page_title="K-Means Segmentation Web App", layout="wide")
 st.markdown(
     """
     <style>
@@ -23,8 +26,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Streamlit UI
-st.set_page_config(page_title="K-Means Segmentation Web App", layout="wide")
 st.image("./img/lbs_logo.jpg", width=100)
 st.title("LBS K-Means Segmentation Web App")
 
