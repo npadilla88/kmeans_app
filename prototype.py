@@ -159,6 +159,8 @@ if uploaded_file:
                 st.dataframe(cluster_descriptions[selected_k])
                 # Extract the selected segment table
                 df_seg = cluster_descriptions[selected_k]
+                # Transform all columns to numeric
+                df_seg.iloc[:, 1:] = df_seg.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
                 axis_x = 2
                 axis_y = 3
                 x_col, y_col = df_seg.columns[axis_x], df_seg.columns[axis_y]  # Assuming cols: Segment, Size, X, Y, ...
