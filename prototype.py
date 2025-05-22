@@ -157,6 +157,36 @@ if uploaded_file:
             if selected_k in cluster_descriptions:
                 st.write(f"#### Segment Description for k = {selected_k}")
                 st.dataframe(cluster_descriptions[selected_k])
+                # Extract the selected segment table
+                df_seg = cluster_descriptions[selected_k]
+                axis_x = 2,
+                axis_y = 3
+                x_col, y_col = df_seg.columns[axis_x], df_seg.columns[axis_y]  # Assuming cols: Segment, Size, X, Y, ...
+                # Original data for defining the plot limits
+                x_min, x_max = df[x_col].min(), df[x_col].max()
+                y_min, y_max = df[y_col].min(), df[y_col].max()
+                # Plotting
+                fig, ax = plt.subplots(figsize=(8, 8), facecolor='#001E62')
+                # ax.set_facecolor('#C8102E')
+                # Plot each segment as a bubble
+                ax.scatter(
+                    df_seg[x_col],
+                    df_seg[y_col],
+                    s=df_seg["Segment Size"] * 1000,  # Scale bubble size
+                    alpha=0.6,
+                    c='#C8102E',
+                    edgecolors='white'
+                )
+                # Annotate with segment labels
+                for idx, row in df_seg.iterrows():
+                    ax.text(row[x_col], row[y_col], str(int(row["Segment"])), fontsize=10, ha='center', va='center', color='white')
+                ax.set_xlabel(x_col)
+                ax.set_ylabel(y_col)
+                ax.set_title(f"Segment Description for k = {selected_k}")
+                ax.set_xlim(x_min, x_max)
+                ax.set_ylim(y_min, y_max)
+                ax.grid(True, linestyle='--', alpha=0.5)
+                st.pyplot(fig)
             else:
                 st.error("Invalid selection. Please select a valid number of segments.")
         
