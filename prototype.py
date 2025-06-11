@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.cluster import KMeans
 from io import StringIO
+import io
 
 # Set random seed for reproducibility
 RANDOM_SEED = 42
@@ -126,7 +127,7 @@ if uploaded_file:
         # Elbow Plot
         if selection == "Elbow Plot & Explained Variance":
             explained_variance_percentage = [var * 100 for var in explained_variance]
-            fig, ax = plt.subplots(figsize=(4, 2.5), facecolor='#001E62')
+            fig, ax = plt.subplots(figsize=(8, 5), facecolor='#001E62')
             ax.set_facecolor('#C8102E')
             ax.plot(
                 k_values,
@@ -193,7 +194,10 @@ if uploaded_file:
                 ax.set_ylim(y_min, y_max)
                 ax.set_title(f"Segment Description for k = {selected_k}")
                 ax.grid(True, linestyle='--', alpha=0.5)
-                st.pyplot(fig)
+                # st.pyplot(fig)
+                buf = io.BytesIO()
+                fig.savefig(buf, format="png", dpi=100, bbox_inches="tight")
+                st.image(buf)
             else:
                 st.error("Invalid selection. Please select a valid number of segments.")
         
