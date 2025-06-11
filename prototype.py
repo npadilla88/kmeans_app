@@ -196,7 +196,7 @@ if uploaded_file:
                 ax.grid(True, linestyle='--', alpha=0.5)
                 # st.pyplot(fig)
                 buf = io.BytesIO()
-                fig.savefig(buf, format="png", dpi=100, bbox_inches="tight")
+                fig.savefig(buf, format="png", dpi=150, bbox_inches="tight")
                 st.image(buf)
             else:
                 st.error("Invalid selection. Please select a valid number of segments.")
