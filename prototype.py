@@ -164,7 +164,7 @@ if uploaded_file:
                 df_seg.iloc[:, 1:] = df_seg.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
                 # Get list of numeric columns to choose from (excluding 'Segment' and 'Segment Size')
                 available_columns = df_seg.columns.drop(["Segment", "Segment Size"], errors='ignore').tolist()
-                col_left, col_right = st.columns([1, 2])  # Left: selectors, Right: plot
+                col_left, col_right = st.columns([1, 1.5])  # Left: selectors, Right: plot
                 with col_left:
                     # Let user select X and Y axes
                     default_x = 0 if len(available_columns) > 0 else 0
