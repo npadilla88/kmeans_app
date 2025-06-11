@@ -164,40 +164,40 @@ if uploaded_file:
                 df_seg.iloc[:, 1:] = df_seg.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
                 # Get list of numeric columns to choose from (excluding 'Segment' and 'Segment Size')
                 available_columns = df_seg.columns.drop(["Segment", "Segment Size"], errors='ignore').tolist()
-                # Let user select X and Y axes
-                default_x = 0 if len(available_columns) > 0 else 0
-                default_y = 1 if len(available_columns) > 1 else default_x
-                x_col = st.selectbox("Select X-axis variable", available_columns, index=default_x)
-                y_col = st.selectbox("Select Y-axis variable", available_columns, index=default_y)
-                # Original data for defining the plot limits
-                # Plotting
-                x_min, x_max = df[x_col].min() - 0.5, df[x_col].max() + 0.5
-                y_min, y_max = df[y_col].min() - 0.5, df[y_col].max() + 0.5
-                fig, ax = plt.subplots(figsize=(8, 8), facecolor='#001E62')
-                ax.set_facecolor('#001E62')
-                # Plot each segment as a bubble
-                sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 5000
-                ax.scatter(
-                    df_seg[x_col],
-                    df_seg[y_col],
-                    s=sizes,  # Scale bubble size
-                    # alpha=0.6,
-                    c='#C8102E',
-                    edgecolors='white'
-                )
-                # Annotate with segment labels
-                for idx, row in df_seg.iterrows():
-                    ax.text(row[x_col], row[y_col], str(int(row["Segment"])), fontsize=10, ha='center', va='center', color='white')
-                ax.set_xlabel(x_col)
-                ax.set_ylabel(y_col)
-                ax.set_xlim(x_min, x_max)
-                ax.set_ylim(y_min, y_max)
-                ax.set_title(f"Segment Description for k = {selected_k}")
-                ax.grid(True, linestyle='--', alpha=0.5)
-                # st.pyplot(fig)
-                buf = io.BytesIO()
-                fig.savefig(buf, format="png", dpi=150, bbox_inches="tight")
-                st.image(buf)
+                col_left, col_right = st.columns([1, 2])  # Left: selectors, Right: plot
+                with col_left:
+                    # Let user select X and Y axes
+                    default_x = 0 if len(available_columns) > 0 else 0
+                    default_y = 1 if len(available_columns) > 1 else default_x
+                    x_col = st.selectbox("Select X-axis variable", available_columns, index=default_x)
+                    y_col = st.selectbox("Select Y-axis variable", available_columns, index=default_y)
+                with col_right:
+                    # Original data for defining the plot limits
+                    # Plotting
+                    x_min, x_max = df[x_col].min() - 0.5, df[x_col].max() + 0.5
+                    y_min, y_max = df[y_col].min() - 0.5, df[y_col].max() + 0.5
+                    fig, ax = plt.subplots(figsize=(8, 8), facecolor='#001E62')
+                    ax.set_facecolor('#001E62')
+                    # Plot each segment as a bubble
+                    sizes = pd.to_numeric(df_seg["Segment Size"], errors="coerce").fillna(0) * 5000
+                    ax.scatter(
+                        df_seg[x_col],
+                        df_seg[y_col],
+                        s=sizes,  # Scale bubble size
+                        # alpha=0.6,
+                        c='#C8102E',
+                        edgecolors='white'
+                    )
+                    # Annotate with segment labels
+                    for idx, row in df_seg.iterrows():
+                        ax.text(row[x_col], row[y_col], str(int(row["Segment"])), fontsize=10, ha='center', va='center', color='white')
+                    ax.set_xlabel(x_col)
+                    ax.set_ylabel(y_col)
+                    ax.set_xlim(x_min, x_max)
+                    ax.set_ylim(y_min, y_max)
+                    ax.set_title(f"Segment Description for k = {selected_k}")
+                    ax.grid(True, linestyle='--', alpha=0.5)
+                    st.pyplot(fig)
             else:
                 st.error("Invalid selection. Please select a valid number of segments.")
         
